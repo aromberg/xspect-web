@@ -41,6 +41,8 @@ export default async function classificationPage({ params }: any) {
   const results = await getResults(genus, file, meta, step);
   const metadata = await getModelMetadata(genus);
 
+  const prediction = metadata.display_names[results.prediction];
+
   const combinedResults = Object.keys(results.scores).map((key) => ({
     category: metadata.display_names[key],
     score: results.scores[key],
@@ -58,12 +60,12 @@ export default async function classificationPage({ params }: any) {
       <div className="mt-8 w-full">
         <div className="mx-8 rounded-lg border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
           <h1 className="mb-4 text-4xl font-bold dark:text-white">
-            Prediction: {results.prediction}
+            Prediction: {prediction}
           </h1>
           <p>File: {file}</p>
           <p>Meta: {meta}</p>
           <p>Step: {step}</p>
-          <p>Prediction result: {results.prediction}</p>
+          <p>Prediction result: {prediction}</p>
           <RadarChart keys={categories} values={values} />
         </div>
       </div>

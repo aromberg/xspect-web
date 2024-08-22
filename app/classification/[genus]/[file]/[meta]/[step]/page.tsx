@@ -1,4 +1,4 @@
-import { RadarChart } from "@/components/chart";
+import { ModelResult } from "@/components/modelResult";
 
 async function getResults(
   genus: string,
@@ -17,7 +17,7 @@ async function getResults(
     throw new Error("Failed to fetch data");
   }
 
-  return res.json();
+  return res.json() as Promise<Run>;
 }
 
 async function getModelMetadata(genus: string) {
@@ -38,22 +38,15 @@ export default async function classificationPage({ params }: any) {
   const meta = await params.meta;
   const step = await params.step;
 
-  const results = await getResults(genus, file, meta, step);
+  const run = await getResults(genus, file, meta, step);
   const metadata = await getModelMetadata(genus);
 
-  const prediction = metadata.display_names[results.prediction];
+  const result =
+    meta == "true"
+      ? run.results[0].pipeline_steps[0].model_execution
+      : run.results[0];
 
-  const combinedResults = Object.keys(results.scores).map((key) => ({
-    category: metadata.display_names[key],
-    score: results.scores[key],
-  }));
-
-  const top10Results = combinedResults
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
-
-  const categories = top10Results.map((result) => result.category);
-  const values = top10Results.map((result) => result.score);
+  const prediction = metadata.display_names[result.prediction];
 
   return (
     <div className="flex h-screen justify-center">
@@ -66,7 +59,7 @@ export default async function classificationPage({ params }: any) {
           <p>Meta: {meta}</p>
           <p>Step: {step}</p>
           <p>Prediction result: {prediction}</p>
-          <RadarChart keys={categories} values={values} />
+          <ModelResult result={result} metadata={metadata} />
         </div>
       </div>
     </div>

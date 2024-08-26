@@ -10,6 +10,14 @@ export const flowbiteTheme: CustomFlowbiteTheme = {
       },
     },
   },
+  checkbox: {
+    root: {
+      color: {
+        default:
+          "text-blue-700 focus:ring-blue-600 dark:ring-offset-blue-700 dark:focus:ring-blue-700",
+      },
+    },
+  },
   footer: {
     root: {
       base: "flex flex-col",

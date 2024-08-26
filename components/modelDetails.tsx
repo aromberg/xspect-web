@@ -137,7 +137,11 @@ export default function ModelDetailsForm(props: {
           </TableBody>
         </Table>
         <UpdateDisplayNameModal
-          slug={model.model_display_name + "-" + model.model_type.toLowerCase()}
+          slug={
+            model.model_display_name.toLowerCase() +
+            "-" +
+            model.model_type.toLowerCase()
+          }
           displayName={model.display_names[editDisplayNameModalID]}
           id={editDisplayNameModalID}
           closeModal={() => setEditDisplayNameModalID("")}

@@ -45,8 +45,6 @@ export function ModelResult(props: {
     ]),
   );
 
-  console.log(totalScores);
-
   const combinedResults = Object.keys(normalizedScores).map((key) => ({
     category: props.metadata.display_names[key],
     score: normalizedScores[key],
@@ -60,8 +58,9 @@ export function ModelResult(props: {
   const values = topResults.map((result) => result.score);
 
   return (
-    <div>
-      <div className="mx-8 rounded-lg border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
+    <div className="grid grid-cols-5 gap-4">
+      <div className=" col-span-1 mx-8 rounded-lg border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="mb-4 font-bold dark:text-white">Subsequences</h2>
         <ListGroup>
           {subsequences.map((key) => (
             <ListGroup.Item key={key}>
@@ -70,10 +69,14 @@ export function ModelResult(props: {
                 defaultChecked={selectedSubsequences.includes(key)}
                 onChange={handleCheckboxChange}
               />
-              <Label htmlFor={key}>{key}</Label>
+              <Label htmlFor={key} className="ml-2">
+                {key}
+              </Label>
             </ListGroup.Item>
           ))}
         </ListGroup>
+        <h2 className="mt-4 font-bold dark:text-white">#Results</h2>
+
         <RangeSlider
           min="1"
           max={Object.keys(normalizedScores).length}
@@ -81,7 +84,9 @@ export function ModelResult(props: {
           onChange={(event) => setNumResults(parseInt(event.target.value))}
         />
       </div>
-      <RadarChart keys={categories} values={values} />
+      <div className="col-span-4">
+        <RadarChart keys={categories} values={values} />
+      </div>
     </div>
   );
 }

@@ -22,7 +22,7 @@ async function getResults(
 
 async function getModelMetadata(genus: string) {
   const res = await fetch(
-    `${process.env.XSPECT_HOST}:${process.env.XSPECT_PORT}/model-metadata?model_slug=${genus}-species`,
+    `${process.env.XSPECT_HOST}:${process.env.XSPECT_PORT}/model-metadata?model_slug=${genus.toLowerCase()}-species`,
   );
 
   if (!res.ok) {
@@ -55,10 +55,12 @@ export default async function classificationPage({ params }: any) {
           <h1 className="mb-4 text-4xl font-bold dark:text-white">
             Prediction: {prediction}
           </h1>
-          <p>File: {file}</p>
-          <p>Meta: {meta}</p>
-          <p>Step: {step}</p>
-          <p>Prediction result: {prediction}</p>
+          <div className="mb-10">
+            <p>File: {file}</p>
+            <p>Meta: {meta}</p>
+            <p>Step: {step}</p>
+            <p>Prediction result: {prediction}</p>
+          </div>
           <ModelResult result={result} metadata={metadata} />
         </div>
       </div>

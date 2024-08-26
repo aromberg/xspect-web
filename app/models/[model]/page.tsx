@@ -14,7 +14,7 @@ async function getModelMetadata(modelSlug: string) {
 }
 
 export default async function modelDetailsPage({ params }: any) {
-  const modelSlug = await params.model;
+  const modelSlug = await params.model.toLowerCase();
   const model = await getModelMetadata(modelSlug);
 
   return (
@@ -39,6 +39,6 @@ export default async function modelDetailsPage({ params }: any) {
           <ModelDetailsForm modelMetadata={model} />
         </div>
       </div>
-    </div >
+    </div>
   );
 }

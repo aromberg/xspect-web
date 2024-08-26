@@ -35,7 +35,9 @@ export default function ModelDetailsForm(props: {
     const email = event.currentTarget.email1.value as string;
 
     updateModelMetadata(
-      model.model_display_name + "-" + model.model_type.toLowerCase(),
+      model.model_display_name.toLowerCase() +
+        "-" +
+        model.model_type.toLowerCase(),
       author,
       email,
     )

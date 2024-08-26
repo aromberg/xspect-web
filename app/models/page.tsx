@@ -52,7 +52,7 @@ export default async function ModelsPage() {
                       <TableCell>{type}</TableCell>
                       <TableCell>
                         <Link
-                          href={`/models/${model_name}-${type.toLowerCase()}`}
+                          href={`/models/${model_name.toLowerCase()}-${type.toLowerCase()}`}
                           className="font-medium text-blue-500 hover:underline dark:text-blue-500"
                         >
                           Edit
